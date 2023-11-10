@@ -1,0 +1,18 @@
+name: "MAX Sonar Scanner Action"
+description: "Scans a project for vulnerabilities"
+author: "Frey Clante"
+
+inputs:
+  prop:
+    description: "Property"
+    required: true
+    default: "value"
+outputs:
+  prop:
+    description: "Property"
+  
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs. }}

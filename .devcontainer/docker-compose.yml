@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  opticpg:
+    image: max-sonar-action
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: dev  
+    volumes:     
+      - type: bind
+        source: .
+        target: /app
+
+    stdin_open: true
+    tty: true
