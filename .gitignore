@@ -1,5 +1,10 @@
+.lesshst
+.bashrc
 .cache
 .config
 .ssh
 .vscode-server
 .gitconfig
+.devcontainer/*Marker
+src/bin/
+src/example.com/
