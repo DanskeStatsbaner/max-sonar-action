@@ -7,15 +7,15 @@ import (
 )
 
 // Hello returns a greeting for the named person.
-// Hello returns a greeting for the named person.
 func Hello(name string) (string, error) {
 	// If no name was given, return an error with a message.
 	if name == "" {
-		return name, errors.New("empty name")
+		return "", errors.New("empty name")
 	}
-	// Create a message using a random format.
-	// message := fmt.Sprintf(randomFormat(), name)
-	message := fmt.Sprint(randomFormat())
+
+	// If a name was received, return a value that embeds the name
+	// in a greeting message.
+	message := fmt.Sprintf(randomFormat(), name)
 	return message, nil
 }
 

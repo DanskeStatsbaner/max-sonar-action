@@ -1,0 +1,8 @@
+go 1.21.4
+
+use (
+	./greetings
+	./hello
+	../pkg/mod/rsc.io/quote@v1.5.2
+	../pkg/mod/rsc.io/sampler@v1.3.0
+)
