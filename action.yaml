@@ -7,9 +7,6 @@ inputs:
     description: "Property"
     required: true
     default: "value"
-outputs:
-  prop:
-    description: "Property"
   
 runs:
   using: 'docker'

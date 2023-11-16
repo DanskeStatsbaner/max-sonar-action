@@ -1,0 +1,31 @@
+[07-11 13:43] Søren Rindal Nielsen
+def RunSonarScanWithMvn() {
+    SONAR_ARGS = []
+    SONAR_ARGS += """${env.BRANCH_NAME =~ "^PR-"
+        ?" -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.branch=${env.CHANGE_BRANCH} -Dsonar.pullrequest.base=${env.CHANGE_TARGET}"
+        :"-Dsonar.branch.name=${env.BRANCH_NAME}"
+    }"""
+    SONAR_ARGS += "-Dsonar.exclusions=**.xsd"
+    SONAR_ARGS += "-Dsonar.projectKey=$projectName -Dsonar.projectName=$projectName -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN"
+    SONAR_ARGS += "-Dsonar.projectVersion=$version -Dsonar.projectBaseDir=/workdir/src"
+    if ( fileExists('src/settings.xml')) {
+        echo "settings.xml exists"
+        SONAR_ARGS += "--settings settings.xml"
+    }
+    commands = []
+    commands += "mvn clean install sonar:sonar -Dmaven.test.skip=true ${SONAR_ARGS.join(" ")}"
+    sh "docker run -v ~/.m2:/root/.m2 -v \$(pwd):/workdir -w '/workdir/src' maven:3.8.4-openjdk-17-slim bash -c '${commands.join("; ")}'"
+}
+ 
+[07-11 13:43] Søren Rindal Nielsen
+def RunSonarScanWithSonarCli() {
+    SONAR_PROJECT_KEY="${projectName}"
+    args1 = """${env.BRANCH_NAME =~ "^PR-"
+        ?"-Dsonar.java.binaries=target -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.branch=${env.CHANGE_BRANCH} -Dsonar.pullrequest.base=${env.CHANGE_TARGET}"
+        :"-Dsonar.java.binaries=target -Dsonar.branch.name=${env.BRANCH_NAME}"
+    }"""
+    args = args1 + " -Dsonar.exclusions=**.xsd -Dsonar.projectBaseDir=/workdir/src -Dsonar.python.version=3 -Dsonar.projectVersion=${version}"
+    SONAR_ENV_ARGS = "-e SONAR_HOST_URL=$SONAR_HOST_URL -e SONAR_LOGIN=$SONAR_AUTH_TOKEN"
+    sh "docker run --rm $SONAR_ENV_ARGS -v \$(pwd):/workdir -w='/workdir/src' sonarsource/sonar-scanner-cli sonar-scanner $args -Dsonar.projectKey=$SONAR_PROJECT_KEY"
+}
+ 

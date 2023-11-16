@@ -35,7 +35,7 @@
 		"GHP_USER": "$localEnv:GHP_USER",
 		"GHP_TOKEN": "$localEnv:GHP_TOKEN",
 		"GOPATH": "/home/vscode/src",
-		"GOWORK": "/home/vscode/src/example.com/go.work"
+		"GOWORK": "/home/vscode/src/dk.dsb./go.work"
 	},
 	// Configure tool-specific properties.
 	"customizations": {

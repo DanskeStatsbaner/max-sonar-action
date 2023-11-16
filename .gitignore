@@ -7,4 +7,3 @@
 .gitconfig
 .devcontainer/*Marker
 src/bin/
-src/example.com/

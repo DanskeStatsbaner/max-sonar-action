@@ -1,0 +1,9 @@
+#name: max-sonarqube-scan
+#
+#on:
+#  workflow_dispatch:
+#
+#jobs:
+#  scan-source:
+#    runs-on:
+#
